@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updated Tiger Details</title>
+</head>
+<body>
+    <h1>Updated Tiger Details</h1>
+
+    <div>
+        <h2>Tiger ID: <%= tiger.tiger_id %></h2>
+        <p>Location: <%= tiger.location %></p>
+        <p>Timestamp: <%= tiger.timestamp %></p>
+        <% if (tiger.image) { %>
+            <img src="/uploads/<%= tiger.image %>" alt="Tiger Image" />
+        <% } %>
+    </div>
+
+    <a href="/">Back to Home</a>
+</body>
+</html>

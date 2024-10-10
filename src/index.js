@@ -95,6 +95,43 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // POST route to update tiger details
+// app.post('/update', upload.single('image'), async (req, res) => {
+//     try {
+//         const { tiger_id, location } = req.body;
+//         // Find tiger by tiger_id
+//         const tiger = await Tiger.findOne({ tiger_id: tiger_id });
+//         if (!tiger) {
+//             return res.status(404).json({ error: 'Tiger not found' });
+//         }
+
+//         // Update tiger details
+//         if (req.file) {
+//             tiger.image = req.file.filename;
+//         }
+        
+//         tiger.timestamp = new Date(); // Set current date and time
+
+//         if (location) {
+//             tiger.location = location
+//         }
+
+//         // Save updated tiger
+//         await tiger.save();
+
+//         res.status(200).json({ message: 'Tiger details updated successfully', tiger });
+
+//         const updatedTiger = await Tiger.findOne( {tiger_id: tiger_id});
+//         const updatedTigerToString = JSON.stringify(tiger);
+//         const hashedDataOfTiger = crypto.createHash('sha256').update(updatedTigerToString).digest('hex');
+//         // Write hashed data to a .txt file
+//         fs.writeFileSync("hash.txt", hashedDataOfTiger);
+
+//     }  catch (error) {
+//         // console.error(error);
+//         res.status(500).send('Internal server error' );
+//     }
+// });
+
 app.post('/update', upload.single('image'), async (req, res) => {
     try {
         const { tiger_id, location } = req.body;
@@ -106,29 +143,27 @@ app.post('/update', upload.single('image'), async (req, res) => {
 
         // Update tiger details
         if (req.file) {
-            tiger.image = req.file.filename;
+            tiger.image = req.file.filename; // Save the filename to the database
         }
         
         tiger.timestamp = new Date(); // Set current date and time
 
         if (location) {
-            tiger.location = location
+            tiger.location = location;
         }
 
         // Save updated tiger
         await tiger.save();
 
-        res.status(200).json({ message: 'Tiger details updated successfully', tiger });
+        // After saving, fetch the updated tiger data
+        const updatedTiger = await Tiger.findOne({ tiger_id: tiger_id });
 
-        const updatedTiger = await Tiger.findOne( {tiger_id: tiger_id});
-        const updatedTigerToString = JSON.stringify(tiger);
-        const hashedDataOfTiger = crypto.createHash('sha256').update(updatedTigerToString).digest('hex');
-        // Write hashed data to a .txt file
-        fs.writeFileSync("hash.txt", hashedDataOfTiger);
+        // Render the updated tiger details on a new page (you can create an 'updated.ejs' view)
+        res.render("updated", { tiger: updatedTiger });
 
-    }  catch (error) {
-        // console.error(error);
-        res.status(500).send('Internal server error' );
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal server error');
     }
 });
 
