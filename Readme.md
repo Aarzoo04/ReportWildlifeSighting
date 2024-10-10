@@ -51,7 +51,7 @@ To set up the project locally, follow these steps:
  ```
 
 6. **Access the application**:
-Open your browser and navigate to `http://localhost:5000` to use the app.
+Open your browser and navigate to `http://127.0.0.1:5000/` to use the app.
 
 ## Usage
 1. Register or log in to your account.
