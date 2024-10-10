@@ -42,7 +42,7 @@ To set up the project locally, follow these steps:
 
 4. **Configure Environment Variables**:
    Create a `.env` file in the root directory and add your MongoDB connection string:
-   `MONGODB_URI= your_mongodb_connection_string`
+   `Mongo_URI= your_mongodb_connection_string`
 
 
 5. **Run the application**:
