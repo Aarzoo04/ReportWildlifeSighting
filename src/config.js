@@ -3,7 +3,12 @@ const mongoose = require('mongoose');
 
 const mongoURI = process.env.Mongo_URI;
 
-const connect = mongoose.connect(mongoURI)
+const connect = mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 20000, // Timeout for server selection
+    socketTimeoutMS: 45000 // Timeout for socket inactivity
+  })
     .then(() => console.log('MongoDB connected successfully'))
     .catch(err => console.error('MongoDB connection error:', err));
 
